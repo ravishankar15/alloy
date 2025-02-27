@@ -79,6 +79,7 @@ var encoding = map[string]interface{}{
 	"from_yaml":      yamlDecode,
 	"from_base64":    base64Decode,
 	"from_URLbase64": base64URLDecode,
+	"to_json":        jsonEncode,
 	"to_base64":      base64Encode,
 	"to_URLbase64":   base64URLEncode,
 }
@@ -322,6 +323,14 @@ func base64URLDecode(in string) (interface{}, error) {
 		return nil, err
 	}
 	return decoded, nil
+}
+
+func jsonEncode(in interface{}) (interface{}, error) {
+	res, err := json.Marshal(in)
+	if err != nil {
+		return nil, err
+	}
+	return string(res), nil
 }
 
 func base64URLEncode(in string) (interface{}, error) {
