@@ -326,7 +326,11 @@ func base64URLDecode(in string) (interface{}, error) {
 }
 
 func jsonEncode(in interface{}) (interface{}, error) {
-	res, err := json.Marshal(in)
+	v, ok := in.(map[string]interface{})
+	if !ok {
+		return nil, fmt.Errorf("only supports map")
+	}
+	res, err := json.Marshal(v)
 	if err != nil {
 		return nil, err
 	}
